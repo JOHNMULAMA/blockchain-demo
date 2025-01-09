@@ -13,6 +13,9 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
+    - name: Install words package
+      run: sudo apt-get install wamerican -y
+
     - name: Add random phrase
       run: |
         echo "Updating phrases..." 
