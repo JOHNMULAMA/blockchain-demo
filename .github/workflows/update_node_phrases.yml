@@ -1,0 +1,25 @@
+name: Update Node Phrases
+
+on:
+  schedule:
+    - cron: "*/10 * * * *" # Runs every 10 minutes
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  update-node-phrases:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Add random phrase
+      run: |
+        echo "Updating phrases..." 
+        RANDOM_WORD=$(shuf -n 1 /usr/share/dict/words)
+        echo "$RANDOM_WORD" >> phrases.text
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git add phrases.text
+        git commit -m "Added random word: $RANDOM_WORD"
+        git push
